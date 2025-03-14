@@ -7,7 +7,7 @@ import About from "./pages/About";
 import Vans from "./pages/vans/Vans";
 import VanDetail from "./pages/vans/VanDetail";
 import { makeServer } from "./server";
-import Layout from "./components/Layout";
+import Layout from "./components/layout";
 import Dashboard from "./pages/host/Dashboard";
 import Reviews from "./pages/host/Reviews";
 import Income from "./pages/host/Income";
