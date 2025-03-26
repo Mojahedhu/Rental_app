@@ -5,7 +5,7 @@ import HomePag from "./pages/Home";
 import About from "./pages/About";
 import Vans, { loader as vansLoader } from "./pages/vans/Vans";
 import VanDetail, { loader as vanDetailLoader } from "./pages/vans/VanDetail";
-import "./server";
+
 import Layout from "./components/Layout";
 import Dashboard, { loader as dashboarLoader } from "./pages/host/Dashboard";
 import Reviews from "./pages/host/Reviews";
