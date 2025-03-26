@@ -1,40 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import bgimgae from "../../assets/images/about-hero.png";
+import React, { Suspense } from "react";
+import { getHostVans } from "../../api";
+import { requireAuth } from "../../utils";
+import { useLoaderData, Link, Await } from "react-router-dom";
+import Loading from "../../components/Loading";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function loader({ request }) {
+  await requireAuth(request);
+  const vans = getHostVans();
+  return { vans };
+}
+
 function HostVans() {
-  const [vans, setVans] = React.useState([]);
-
-  React.useEffect(() => {
-    fetch("/api/host/vans")
-      .then((res) => res.json())
-      .then((data) => setVans(data.vans));
-  }, []);
-
-  const hostVansEls = vans.map((van) => (
-    <Link
-      className="host-van-link-wrapper"
-      key={van.id}
-      to={`/host/vans/${van.id}`}
-    >
-      <div className="host-van-single" key={van.id}>
-        <img src={bgimgae} alt={`${van.name}`} />
-        <div className="host-van-info">
-          <h3>{van.name}</h3>
-          <p>${van.price}</p>
+  const dataPromise = useLoaderData();
+  function renderHostVansEls(vans) {
+    const vansEls = vans.map((van) => (
+      <Link className="host-van-link-wrapper" key={van.id} to={van.id}>
+        <div className="host-van-single" key={van.id}>
+          <img src={van.imageUrl} alt={`${van.name}`} />
+          <div className="host-van-info">
+            <h3>{van.name}</h3>
+            <p>${van.price}</p>
+          </div>
         </div>
+      </Link>
+    ));
+
+    return (
+      <div className="host-vans-list">
+        <section>{vansEls}</section>
       </div>
-    </Link>
-  ));
+    );
+  }
+
   return (
     <section className="host-vans">
       <h1 className="host-vans-title">Your listed vans</h1>
-      <div className="host-vans-list">
-        {vans.length > 0 ? (
-          <section>{hostVansEls}</section>
-        ) : (
-          <h2>Loading...</h2>
-        )}
-      </div>
+      <Suspense fallback={<Loading />}>
+        <Await resolve={dataPromise.vans}>{renderHostVansEls}</Await>
+      </Suspense>
     </section>
   );
 }

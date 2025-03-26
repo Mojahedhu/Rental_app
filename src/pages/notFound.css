@@ -1,0 +1,49 @@
+/* General Styles */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  height: 100vh;
+  background-color: #f8ead9;
+  text-align: center;
+}
+
+/* 404 Text */
+.not-found-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: black;
+  margin: 0;
+}
+img {
+  width: 180px;
+}
+
+/* Subtext */
+.not-found-text {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin-top: 10px;
+}
+
+/* Button */
+.not-found-button-container {
+  margin-top: 20px;
+}
+
+.not-found-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 1rem;
+  color: white;
+  background-color: #ff8c38;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+  transition: transform 0.1s ease-in-out;
+}
+
+.not-found-button:hover {
+  transform: translate(1px, 1px);
+}

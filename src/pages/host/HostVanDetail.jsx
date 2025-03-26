@@ -1,24 +1,25 @@
-import React from "react";
-import { useParams, NavLink, Outlet, Link } from "react-router-dom";
-import bgimg from "../../assets/images/about-hero.png";
+import React, { Suspense } from "react";
+import { getVan } from "../../api";
+import { requireAuth } from "../../utils";
+import { useLoaderData, NavLink, Link, Outlet, Await } from "react-router-dom";
+import Loading from "../../components/Loading";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function loader({ params, request }) {
+  await requireAuth(request);
+  const van = getVan(params.id);
+  return { van };
+}
 
 function HostVanDetail() {
-  const { id } = useParams();
-  const [currentVan, setCurrentVan] = React.useState([]);
+  const dataPromise = useLoaderData();
   const activeStyle = {
     color: "#161616",
     fontWeight: "700",
     textDecoration: "underline",
   };
-  React.useEffect(() => {
-    fetch(`/api/host/vans/${id}`)
-      .then((res) => res.json())
-      .then((data) => setCurrentVan(data.vans));
-  }, []);
 
-  if (currentVan.length === 0) {
-    return <h1>Loading...</h1>;
-  } else {
+  function renderHostVanDetail(currentVan) {
     return (
       <section>
         <Link to={".."} className="back-button" relative="path">
@@ -26,7 +27,7 @@ function HostVanDetail() {
         </Link>
         <div className="host-van-detail-layout-container">
           <div className="host-van-detail">
-            <img src={bgimg} alt={currentVan.name} />
+            <img src={currentVan.imageUrl} alt={currentVan.name} />
             <div className="host-van-detail-info-text">
               <i className={`van-type van-type-${currentVan.type}`}>
                 {currentVan.type}
@@ -56,11 +57,17 @@ function HostVanDetail() {
               Photos
             </NavLink>
           </nav>
-          <Outlet context={[currentVan, setCurrentVan]} />
+          <Outlet context={currentVan} />
         </div>
       </section>
     );
   }
+
+  return (
+    <Suspense fallback={<Loading />}>
+      <Await resolve={dataPromise.van}>{renderHostVanDetail}</Await>
+    </Suspense>
+  );
 }
 
 export default HostVanDetail;

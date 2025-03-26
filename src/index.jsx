@@ -1,53 +1,104 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import HomePag from "./pages/Home";
 import About from "./pages/About";
-import Vans from "./pages/vans/Vans";
-import VanDetail from "./pages/vans/VanDetail";
-import { makeServer } from "./server";
+import Vans, { loader as vansLoader } from "./pages/vans/Vans";
+import VanDetail, { loader as vanDetailLoader } from "./pages/vans/VanDetail";
+import "./server";
 import Layout from "./components/layout";
-import Dashboard from "./pages/host/Dashboard";
+import Dashboard, { loader as dashboarLoader } from "./pages/host/Dashboard";
 import Reviews from "./pages/host/Reviews";
 import Income from "./pages/host/Income";
 import HostLayout from "./components/HostLayout";
-import HostVans from "./pages/host/HostVans";
-import HostVanDetail from "./pages/host/HostVanDetail";
+import HostVans, { loader as hostVansLoader } from "./pages/host/HostVans";
+import HostVanDetail, {
+  loader as hostVanDetailLoader,
+} from "./pages/host/HostVanDetail";
 import HostVanPricing from "./pages/host/HostVanPricing";
 import HostVanPhoto from "./pages/host/HostVanPhoto";
 import HostVanInfo from "./pages/host/HostVanInfo";
+import NotFound from "./pages/NotFound";
+import ErrorComponent from "./components/Error";
+import Login, { action as loginAction } from "./pages/Login";
+import { requireAuth } from "./utils";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 
-// eslint-disable-next-line no-undef
-if (process.env.NODE_ENV === "development") {
-  makeServer({ environment: "development" });
-}
-
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route index element={<HomePag />} />
+      <Route path="about" element={<About />} />
+      <Route path="login" element={<Login />} action={loginAction} />
+      <Route
+        path="vans"
+        element={<Vans />}
+        loader={vansLoader}
+        errorElement={<ErrorComponent />}
+      />
+      <Route
+        path="vans/:id"
+        element={<VanDetail />}
+        loader={vanDetailLoader}
+        errorElement={<ErrorComponent />}
+      />
+      <Route path="host" element={<HostLayout />}>
+        <Route index element={<Dashboard />} loader={dashboarLoader} />
+        <Route
+          path="income"
+          element={<Income />}
+          loader={async ({ request }) => await requireAuth(request)}
+        />
+        <Route
+          path="reviews"
+          element={<Reviews />}
+          loader={async ({ request }) => await requireAuth(request)}
+        />
+        <Route
+          path="vans"
+          element={<HostVans />}
+          loader={hostVansLoader}
+          errorElement={<ErrorComponent />}
+        />
+        <Route
+          path="vans/:id"
+          element={<HostVanDetail />}
+          loader={hostVanDetailLoader}
+          errorElement={<ErrorComponent />}
+        >
+          <Route
+            index
+            element={<HostVanInfo />}
+            loader={async ({ request }) => await requireAuth(request)}
+          />
+          <Route
+            path="pricing"
+            element={<HostVanPricing />}
+            loader={async ({ request }) => await requireAuth(request)}
+          />
+          <Route
+            path="photos"
+            element={<HostVanPhoto />}
+            loader={async ({ request }) => await requireAuth(request)}
+          />
+        </Route>
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Route>
+  )
+);
 // eslint-disable-next-line react-refresh/only-export-components
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePag />} />
-          <Route path="about" element={<About />} />
-          <Route path="vans" element={<Vans />} />
-          <Route path="vans/:id" element={<VanDetail />} />
-          <Route path="host" element={<HostLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="income" element={<Income />} />
-            <Route path="vans" element={<HostVans />} />
-
-            <Route path="vans/:id" element={<HostVanDetail />}>
-              <Route index element={<HostVanInfo />} />
-              <Route path="pricing" element={<HostVanPricing />} />
-              <Route path="photos" element={<HostVanPhoto />} />
-            </Route>
-            <Route path="reviews" element={<Reviews />} />
-          </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    // <Suspense fallback={<div>Loading...</div>}>
+    // </Suspense>
+    <RouterProvider router={router} />
   );
 }
 createRoot(document.getElementById("root")).render(<App />);

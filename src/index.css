@@ -13,7 +13,11 @@ body {
     display: none;
   }
 }
-
+div.site-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 header {
   height: 110px;
   display: flex;
@@ -26,18 +30,30 @@ header {
     font-weight: 900;
     font-size: 25px;
   }
-  a {
-    text-decoration: none;
-    color: #4d4d4d;
-    font-weight: 600;
-    padding: 5px 20px;
-    &:hover {
-      color: #161616;
-      text-decoration: underline;
+  nav {
+    display: flex;
+    a {
+      text-decoration: none;
+      color: #4d4d4d;
+      font-weight: 600;
+      padding: 5px 20px;
+      &:hover {
+        color: #161616;
+        text-decoration: underline;
+      }
+      &.login-link {
+        display: inline-flex;
+        align-items: center;
+        img.login-icon {
+          height: 18px;
+          width: 18px;
+        }
+      }
     }
   }
 }
-a.link-button {
+a.link-button,
+button.link-button {
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -56,7 +72,6 @@ a.back-button {
   display: block;
   color: black;
   text-decoration: none;
-  margin-top: 60px;
   margin-left: 26px;
 
   span {
@@ -162,6 +177,13 @@ div.about-page-container {
 /*** START VANS PAGE ***/
 div.van-list-container {
   padding-inline: 23px;
+  div.van-list-filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    button {
+      margin-right: 15px;
+    }
+  }
   div.van-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -180,7 +202,8 @@ div.van-list-container {
     }
   }
 }
-i.van-type {
+i.van-type,
+button.van-type {
   height: 34px;
   padding: 6px 26px;
   font-style: normal;
@@ -307,9 +330,10 @@ section.host-vans {
         padding-block: 18px;
         padding-left: 24px;
         > img {
-          height: 70px;
+          height: 160px;
+
           border-radius: 5px;
-          margin-right: 17px;
+          margin-right: 20px;
         }
         > div.host-van-info {
           h3 {
@@ -397,3 +421,238 @@ div.host-van-detail-layout-container {
   }
 }
 /*** END HOST VAN DETAIL ***/
+
+/*** START NOT FOUND PAGE ***/
+div.not-found-container {
+  padding-inline: 26px;
+  a.link-button {
+    width: 100%;
+    background-color: #161616;
+    color: white;
+  }
+}
+/*** END NOT FOUND PAGE ***/
+
+/*** START LOGIN PAGE ***/
+div.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: 27px;
+  form.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    input {
+      border: 1px solid rgba(209, 213, 219);
+      height: 40px;
+      text-indent: 10px;
+      font-family: "Intre", sans-serif;
+      box-shadow: 0px 1px 2px rgba(0 0 0 / 0.05);
+      &:focus {
+        outline: none;
+      }
+      &:first-of-type {
+        border-radius: 6px 6px 0px 0px;
+      }
+      &:last-of-type {
+        border-radius: 0px 0px 6px 6px;
+      }
+    }
+    button {
+      background-color: #ff8c38;
+      border: none;
+      border-radius: 6px;
+      margin-top: 22px;
+      color: white;
+      font-family: "Inter", sans-serif;
+      height: 40px;
+    }
+  }
+}
+/*** END LOGIN PAGE ***/
+
+/*** START DASHBOARD PAGE ***/
+section.host-dashboard-earnings {
+  background-color: #ffead0;
+  padding: 37px 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div.info {
+    > h1 {
+      font-size: 36px;
+      color: #161616;
+      margin: 0;
+    }
+    > p {
+      color: #4d4d4d;
+      > span {
+        text-decoration: underline;
+        font-weight: bold;
+      }
+    }
+    > h2 {
+      margin: 0;
+      font-size: 38px;
+      color: #161616;
+      font-weight: 900;
+    }
+  }
+  a {
+    margin-bottom: 13px;
+    margin-left: 5px;
+  }
+}
+section.host-dashboard-reviews {
+  background-color: #ffddb2;
+  padding: 25px 26px;
+  display: flex;
+  align-items: center;
+  > h2 {
+    margin: 0;
+  }
+  > svg.star {
+    color: #ff8c38;
+    margin-left: 15px;
+    font-size: 25px;
+  }
+  p {
+    margin-left: 5px;
+    font-size: 20px;
+    color: #4d4d4d;
+    margin-right: auto;
+    span {
+      font-weight: bold;
+      color: #161616;
+    }
+  }
+}
+section.host-dashboard-vans {
+  padding: 38px 26px;
+  div.top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  div.host-vans-list {
+    padding-inline: 0;
+    section {
+      text-align: center;
+    }
+  }
+}
+/*** END DASHBOARD PAGE ***/
+
+/*** START INCOME PAGE ***/
+section.host-income {
+  padding-inline: 26px;
+  color: #161616;
+  > p {
+    color: #4d4d4d;
+    span {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+  > h2 {
+    font-size: 36px;
+    color: #161616;
+    font-weight: 900;
+  }
+  img.graph {
+    width: 100%;
+    max-width: 500px;
+  }
+  div.info-header {
+    > p {
+      color: #4d4d4d;
+      span {
+        text-decoration: underline;
+        font-weight: bold;
+      }
+    }
+    > h3 {
+      font-weight: 700;
+      font-size: 24px;
+      margin-top: 60px;
+    }
+  }
+  div.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin-bottom: 31px;
+    padding: 35px 29px;
+    border-radius: 6px;
+    > h3 {
+      font-size: 36px;
+      font-weight: 600;
+      margin: 0;
+    }
+    > p {
+      font-size: 20px;
+      font-weight: 500;
+      color: #4d4d4d;
+    }
+  }
+}
+/*** END INCOME PAGE ***/
+
+/*** START REVIEWS ***/
+section.host-reviews {
+  padding-inline: 26px;
+  color: #161616;
+  max-width: 500px;
+  div.top-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+    > h2 {
+      font-weight: 700;
+      font-size: 32px;
+      margin: 0;
+      margin-right: 20px;
+    }
+    > p {
+      margin: 0;
+      color: #4d4d4d;
+      span {
+        text-decoration: underline;
+        font-weight: bold;
+      }
+    }
+  }
+  > img {
+    margin-bottom: 36px;
+    width: 100%;
+    max-width: 500px;
+  }
+  div.review {
+    margin-block: 25px;
+
+    div.info {
+      display: flex;
+      p.name {
+        color: #161616;
+        margin-right: 10px;
+        font-weight: 600;
+      }
+      p.date {
+        color: #8c8c8c;
+      }
+    }
+  }
+  hr {
+    background-color: #c7c7c7;
+    height: 1px;
+    border: 0;
+  }
+  svg.review-star {
+    color: #ff8c38;
+    margin-right: 5px;
+  }
+}
+/*** END REVIEWS ***/
