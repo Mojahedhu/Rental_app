@@ -1,12 +1,11 @@
 import React from "react";
-import { loginUser } from "../api";
 import {
   // redirect,
-  useLoaderData,
   Form,
   useSearchParams,
   useActionData,
   useNavigation,
+  redirect,
 } from "react-router-dom";
 
 // export function loader({ request }) {
@@ -24,12 +23,12 @@ export async function action({ request }) {
   const email = formData.get("email");
   const password = formData.get("password");
   try {
-    const data = await loginUser({ email, password });
+    // const data = await loginUser({ email, password });
     localStorage.setItem("loggedin", true);
-    return (window.location.href = pathname || "/host");
   } catch (err) {
     return err.message;
   }
+  throw redirect(pathname || "/host");
 }
 
 function Login() {

@@ -20,6 +20,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
 const vansCollectionRef = collection(db, "vans");
@@ -81,6 +82,7 @@ export async function loginUser(creds) {
     method: "post",
     body: JSON.stringify(creds),
   });
+  console.log(res);
   const data = await res.json();
   if (!res.ok) {
     throw {
