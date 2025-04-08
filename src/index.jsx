@@ -28,6 +28,11 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import Register, { action as registerAction } from "./pages/Register";
+import PersonalDetails, {
+  loader as personalDetailsLoader,
+} from "./pages/Profile";
+import { AuthProvider } from "./Provider/AuthProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +40,19 @@ const router = createBrowserRouter(
       <Route index element={<HomePag />} />
       <Route path="about" element={<About />} />
       <Route path="login" element={<Login />} action={loginAction} />
+      <Route
+        path="register"
+        element={<Register />}
+        action={registerAction}
+        errorElement={<ErrorComponent />}
+      />
+      <Route
+        path="personal"
+        element={<PersonalDetails />}
+        // errorElement={<ErrorComponent />}
+        loader={personalDetailsLoader}
+        errorElement={<ErrorComponent />}
+      />
       <Route
         path="vans"
         element={<Vans />}
@@ -48,7 +66,12 @@ const router = createBrowserRouter(
         errorElement={<ErrorComponent />}
       />
       <Route path="host" element={<HostLayout />}>
-        <Route index element={<Dashboard />} loader={dashboarLoader} />
+        <Route
+          index
+          element={<Dashboard />}
+          loader={dashboarLoader}
+          errorElement={<ErrorComponent />}
+        />
         <Route
           path="income"
           element={<Income />}
@@ -97,7 +120,9 @@ function App() {
   return (
     // <Suspense fallback={<div>Loading...</div>}>
     // </Suspense>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 createRoot(document.getElementById("root")).render(<App />);

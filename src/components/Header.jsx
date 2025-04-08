@@ -1,15 +1,15 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import iconImage from "../assets/images/avatar-icon.png";
+import { deleteCurrentUser, logoutUser } from "../authService";
+import { BsPower } from "react-icons/bs";
 function Header() {
+  const navigate = useNavigate();
   const activeStyle = {
     fontWeight: "bold",
     textDecoration: "underline",
     color: "#161616",
   };
-  function fakeLogout() {
-    localStorage.removeItem("loggedin");
-  }
 
   return (
     <header>
@@ -18,7 +18,7 @@ function Header() {
       </NavLink>
       <nav>
         <NavLink
-          to={"/host"}
+          to={"host"}
           style={({ isActive }) => (isActive ? activeStyle : null)}
         >
           Host
@@ -35,11 +35,18 @@ function Header() {
         >
           Vans
         </NavLink>
-        <Link to={"login"} className="login-link">
+        <Link to={"personal"} className="login-link">
           <img src={iconImage} alt="login" className="login-icon" />
         </Link>
       </nav>
-      <button onClick={fakeLogout}>x</button>
+      <button
+        onClick={() => {
+          logoutUser();
+          navigate("/");
+        }}
+      >
+        <BsPower />
+      </button>
     </header>
   );
 }

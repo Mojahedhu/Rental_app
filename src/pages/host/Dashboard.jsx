@@ -7,9 +7,9 @@ import Loading from "../../components/Loading";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader({ request }) {
-  await requireAuth(request);
+  const auth = await requireAuth(request);
   const vans = getHostVans();
-  return { vans };
+  return { vans: vans, auth: auth };
 }
 
 function Dashboard() {

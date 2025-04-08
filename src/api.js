@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore/lite";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCk-1eQ3kBece7j5ZueCggVQp9PdcA3XRY",
@@ -20,8 +21,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 const vansCollectionRef = collection(db, "vans");
 
@@ -52,44 +53,4 @@ export async function getHostVans() {
     id: doc.id,
   }));
   return dataArr;
-}
-
-export async function getHostVan(id) {
-  const docRef = doc(db, "vans", id);
-  const vanSnapshot = await getDoc(docRef);
-
-  return {
-    ...vanSnapshot.data(),
-    id: vanSnapshot.id,
-  };
-}
-// export async function getHostVans(id) {
-//   const url = id ? `/api/host/vans/${id}` : "/api/host/vans";
-//   const res = await fetch(url);
-//   if (!res.ok) {
-//     throw {
-//       message: "field to fetch vans",
-//       statusText: res.statusText,
-//       status: res.status,
-//     };
-//   }
-//   const data = await res.json();
-//   return data.vans;
-// }
-
-export async function loginUser(creds) {
-  const res = await fetch("/api/login", {
-    method: "post",
-    body: JSON.stringify(creds),
-  });
-  console.log(res);
-  const data = await res.json();
-  if (!res.ok) {
-    throw {
-      message: data.message,
-      statusText: data.StatusText,
-      status: data.status,
-    };
-  }
-  return data;
 }
