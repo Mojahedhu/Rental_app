@@ -9,7 +9,8 @@ A full-featured rental van web app built with **React**, **Firebase Auth**, and 
 - ⏳ Loading states & error boundaries
 - 🌐 Global auth state with React Context
 
-🔗 **Live Demo:** [Click Here](https://assembly-endgame-en8ywrodk-mojaheds-projects-e0735fac.vercel.app/](https://super-cat-072e33.netlify.app/)  
+## 🚀 Live Demo 
+🔗 **Live Demo:** [Click Here](https://super-cat-072e33.netlify.app/)  
 
 Built to level up my skills in full-stack development with real-world architecture.  
 Feedback and contributions are always welcome! 😊
