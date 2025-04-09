@@ -8,7 +8,7 @@ A full-featured rental van web app built with **React**, **Firebase Auth**, and 
 - 👤 User dashboard with dynamic routes
 - ⏳ Loading states & error boundaries
 - 🌐 Global auth state with React Context
-- 🚰 Reat rout library
+- 🚰 Reat router library && SSR method (action function and loader function )
 
 ## 🚀 Live Demo 
 🔗 **Live Demo:** [Click Here](https://super-cat-072e33.netlify.app/)  
