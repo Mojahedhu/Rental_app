@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import iconImage from "../assets/images/avatar-icon.png";
-import { deleteCurrentUser, logoutUser } from "../authService";
+import { logoutUser } from "../authService";
 import { BsPower } from "react-icons/bs";
 function Header() {
   const navigate = useNavigate();

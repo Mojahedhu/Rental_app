@@ -1,7 +1,9 @@
 import React from "react";
-import bgimage from "../../assets/images/about-hero.png";
+import { useOutletContext } from "react-router-dom";
 function HostVanPhoto() {
-  return <img className="host-van-image" src={bgimage} alt="" />;
+  const van = useOutletContext();
+  console.log(van);
+  return <img className="host-van-image" src={van.imageUrl} alt="" />;
 }
 
 export default HostVanPhoto;
